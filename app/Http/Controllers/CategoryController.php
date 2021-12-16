@@ -3,30 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use Auth;
-use Illuminate\Support\Carbon; 
+use App\Models\Category; 
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    
+
     public function AllCat(){
 
-        
+
         // $categories = DB::table('categories')
         // ->join('users','categories.user_id','users.id')
         // ->select('categories.*','users.name')
         // ->latest()->paginate(5);
 
-        $categories = Category::latest()->latest()->paginate(5); 
         // $categories = DB::table('categories')->latest()->paginate(5);
-        return view('admin.category.index',compact('categories'));
+
+        $categories = Category::latest()->latest()->paginate(5);
+        $trachCat = Category::onlyTrashed()->latest()->paginate(3);
+        return view('admin.category.index',compact('categories','trachCat'));
     }
 
     public function AddCat(Request $request){
         $validatedData = $request->validate([
-            'category_name' => 'required|unique:categories|max:255', 
+            'category_name' => 'required|unique:categories|max:255',
         ],
         [ 'category_name.required' => 'Please Input Category Name']
     );
@@ -53,8 +55,8 @@ class CategoryController extends Controller
     // edit functinon
     public function Edit($id){
     //   $categories = Category::find($id);
-    $categories = DB::table('categories')->where('id',$id)->first(); 
-      return view('admin.category.edit',compact('categories')); 
+    $categories = DB::table('categories')->where('id',$id)->first();
+      return view('admin.category.edit',compact('categories'));
     }
 
     // update function
@@ -67,10 +69,28 @@ class CategoryController extends Controller
         $data['category_name'] = $request->category_name;
         $data['user_id'] = Auth::user()->id;
         DB::table('categories')->where('id',$id)->update($data);
-  
 
         return Redirect()->route('all.category')->with('success','Category
          Update Successfull');
     }
-    
+
+
+    public function SoftDelete($id){
+        $softdelete = Category::find($id)->delete();
+        return Redirect()->back()->with('success','Category Soft Delete Successfull');
+    }
+
+    public function SoftRestore($id){
+        $softrestore = Category::withTrashed()->find($id)->restore();
+        return Redirect()->back()->with('success','Category Restore Successfull');
+    }
+
+
+    public function Pdelete($id){
+        $delete = Category::onlyTrashed()->find($id)->forceDelete();
+        return Redirect()->back()->with('success','Category P Deleted Successfull');
+    }
+
+
+
 }
