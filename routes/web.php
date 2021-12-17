@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContollerContact;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\HomeController;
 // use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,8 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $brands = DB::table('brands')->get();
+    return view('home',compact('brands'));
 });
 
 Route::get('/home', function () {
@@ -55,9 +57,29 @@ Route::get('/brand/delete/{id}',[BrandController::class,'Delete']);
 
 
 
+// home silder controller
+
+Route::get('/home/slider',[HomeController::class,'HomeSlider'])->name('home.slider');
+Route::get('/add/slider',[HomeController::class,'AddSlider'])->name('add.slider');
+Route::post('/store/slider',[HomeController::class,'StoreSlider'])->name('store.slider');
+
+
+
+
+
+
+
+
+// Multiple Images Brand Controller
+Route::get('/multi/all',[BrandController::class,'MultiImages'])->name('multi.image');
+Route::post('/multi/add',[BrandController::class,'MultiImageAdd'])->name('store.image');
+Route::get('/user/logout',[BrandController::class,'Logout'])->name('user.logout');
+
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     // $users = User::all();
-    $users = DB::table('users')->get();
-    return view('dashboard',compact('users'));
+    // $users = DB::table('users')->get();
+    return view('admin.index');
 })->name('dashboard');

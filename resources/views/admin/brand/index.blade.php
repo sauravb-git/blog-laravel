@@ -1,11 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+@extends('admin.admin_master')
 
-          All Brand  <b> </b>
-
-        </h2>
-    </x-slot>
+@section('admin')
 
             <div class="py-12">
              <div class="container">
@@ -114,78 +109,8 @@
 
 
 
-
-
-
-
-     {{-- Trashed area --}}
-
-
-    {{-- <div class="row">
-      <div class="col-md-8">
-  <div class="card">
-
-
-
-      <div class="card-header">Trash List</div>
-      <table class="table">
-         <thead>
-           <tr>
-             <th scope="col">SL No</th>
-             <th scope="col">Category Name</th>
-             <th scope="col">User</th>
-             <th scope="col">Created At</th>
-             <th scope="col">Action</th>
-           </tr>
-         </thead>
-         <tbody>
-
-
-       @foreach ($trachCat as $category)
-
-           <tr>
-             <th scope="row">{{ $categories->firstItem()+$loop->index }}</th>
-             <td>{{ $category->category_name }}</td>
-             <td>{{ $category->user->name }}</td>
-
-             <td>
-               @if ( $category->created_at == NULL)
-               <span class="text-danger" >Don't Date Set</span>
-                @else
-                {{ Carbon\Carbon::parse($category->created_at)->diffForHumans() }}
-               @endif
-             </td>
-             <td>
-               <a href="{{ url('category/restore/'.$category->id) }}" class="btn btn-primary">Restore</a>
-               <a href="{{ url('category/pdelete/'.$category->id) }}" class="btn btn-danger">P Delete</a>
-             </td>
-
-           </tr>
-       @endforeach
-
-
-         </tbody>
-       </table>
-
-
-       {{  $categories->links() }}
-  </div>
 </div>
 
 </div>
 
-
-
-
-
-
- --}}
-
-
-
-
-
-</div>
-
-</div>
-</x-app-layout>
+@endsection
