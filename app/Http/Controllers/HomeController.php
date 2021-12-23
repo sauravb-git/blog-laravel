@@ -41,8 +41,7 @@ class HomeController extends Controller
         ]);
 
         return Redirect()->route('home.slider')->with('success','Slider Inserted Successfully');
-
-
+        
     }
 
 

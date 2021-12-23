@@ -8,12 +8,7 @@
                      <div class="col-md-8">
                  <div class="card">
 
-                  @if(session('success'))
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{{ session('success') }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                  @endif
+                   
 
                      <div class="card-header">All Brand </div>
                      <table class="table">
@@ -81,7 +76,7 @@
                                 @csrf
                                 <div class="form-group ">
                                     <label for="cateId">Brand Add</label>
-                                    <input type="text" class="form-control m-1"
+                                     <input type="text" class="form-control m-1"
                                     name="brand_name" id="cateId" />
 
                                     @error('brand_name')

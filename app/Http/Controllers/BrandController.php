@@ -16,7 +16,7 @@ class BrandController extends Controller
 
      public function __construct(){
       $this->middleware('auth');
-     } 
+     }
 
 
 
@@ -58,7 +58,15 @@ class BrandController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        return Redirect()->back()->with('success','Brand Inserted Successfully');
+
+
+        $notification = array(
+            'message' => 'Brand Inserted Successfully',
+            'alert-type'  => 'success'
+        );
+
+
+        return Redirect()->back()->with($notification);
 
     }
 
